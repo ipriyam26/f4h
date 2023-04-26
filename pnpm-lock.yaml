@@ -13,12 +13,6 @@ dependencies:
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
-  flowbite:
-    specifier: ^1.6.5
-    version: 1.6.5
-  flowbite-svelte:
-    specifier: ^0.34.9
-    version: 0.34.9(@popperjs/core@2.11.7)(classnames@2.3.2)(flowbite@1.6.5)(svelte@3.58.0)
 
 devDependencies:
   '@sveltejs/vite-plugin-svelte':
@@ -593,28 +587,6 @@ packages:
       to-regex-range: 5.0.1
     dev: true
 
-  /flowbite-svelte@0.34.9(@popperjs/core@2.11.7)(classnames@2.3.2)(flowbite@1.6.5)(svelte@3.58.0):
-    resolution: {integrity: sha512-HtDpkYYWyQ6oLYn0ramv6euWiq6wtDizPxcbcM2ytvepHZ2aNMsekNstzBv2R3K4jOJv3lYwrndQzeqC1aP0PQ==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    peerDependencies:
-      '@popperjs/core': ^2.11.6
-      classnames: ^2.3.2
-      flowbite: ^1.6.3
-      svelte: ^3.55.1
-    dependencies:
-      '@popperjs/core': 2.11.7
-      classnames: 2.3.2
-      flowbite: 1.6.5
-      svelte: 3.58.0
-    dev: false
-
-  /flowbite@1.6.5:
-    resolution: {integrity: sha512-eI4h3pIRI9d7grlYq14r0A01KUtw7189sPLLx/O2i7JyPEWpbleScfYuEc48XTeNjk1xxm/JHgZkD9kjyOWAlA==}
-    dependencies:
-      '@popperjs/core': 2.11.7
-      mini-svg-data-uri: 1.4.4
-    dev: false
-
   /fraction.js@4.2.0:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: true
@@ -784,11 +756,6 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
     dev: true
-
-  /mini-svg-data-uri@1.4.4:
-    resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
-    hasBin: true
-    dev: false
 
   /minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
