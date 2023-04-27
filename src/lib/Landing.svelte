@@ -13,7 +13,7 @@
   <!-- svelte-ignore a11y-img-redundant-alt -->
   <img
     class="max-w-2xl max-h-fit"
-    src="src/assets/imgg.svg"
+    src="assets/imgg.svg"
     alt="image of people in store"
   />
 </div>

@@ -1,18 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
-  '@fortawesome/fontawesome-free':
-    specifier: ^6.4.0
-    version: 6.4.0
-  '@popperjs/core':
-    specifier: ^2.11.7
-    version: 2.11.7
   '@tabler/icons-svelte':
     specifier: ^2.17.0
     version: 2.17.0(svelte@3.58.0)
-  classnames:
-    specifier: ^2.3.2
-    version: 2.3.2
 
 devDependencies:
   '@sveltejs/vite-plugin-svelte':
@@ -64,12 +55,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@fortawesome/fontawesome-free@6.4.0:
-    resolution: {integrity: sha512-0NyytTlPJwB/BF5LtRV8rrABDbe3TdTXqNB3PdZ+UUUZAEIrdOJdmABqKjt4AXwIoJNaRVVZEXxpNrqvE1GAYQ==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
@@ -125,10 +110,6 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
     dev: true
-
-  /@popperjs/core@2.11.7:
-    resolution: {integrity: sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==}
-    dev: false
 
   /@rollup/pluginutils@4.2.1:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
@@ -287,10 +268,6 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
-
-  /classnames@2.3.2:
-    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
-    dev: false
 
   /commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}

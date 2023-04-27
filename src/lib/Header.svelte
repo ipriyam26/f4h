@@ -1,6 +1,10 @@
+<script>
+  // import logo from "";
+</script>
+
 <nav class="bg-secondary pt-12">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between">
-    <img class="w-20 h-9" src="src/assets/logo.svg" alt="" />
+    <img class="w-20 h-9"  alt=""  src="assets/logo.svg"/>
 
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul class=" flex font-normal space-x-16 font-poppins">
