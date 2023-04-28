@@ -3,7 +3,7 @@
   import Connect from "./Connect.svelte";
 </script>
 
-<div class="mt-96">
+<div class="mt-52">
   <img src="assets/logo.svg" alt="Logo again" class="w-36 h-16 mx-auto" />
   <div>
     <ul class="flex font-poppins text-sm space-x-36 justify-center my-14">
