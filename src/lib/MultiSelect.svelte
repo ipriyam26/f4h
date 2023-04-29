@@ -205,45 +205,7 @@
     /* background-color: white; */
     position: relative;
   }
-
-  /* .multiselect:not(.readonly):hover {
-      border-bottom-color: hsl(0, 0%, 50%);
-    }
-   */
-  /* .tokens {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      position: relative;
-      width: 100%;
-    } */
-  /* .tokens::after {    
-      background: none repeat scroll 0 0 transparent;
-      bottom: -1px;
-      content: "";
-      display: block;
-      height: 2px;
-      left: 50%;
-      position: absolute;
-      background: hsl(45, 100%, 51%);
-      transition: width 0.3s ease 0s, left 0.3s ease 0s;
-      width: 0;
-    } */
-  /* .tokens.showOptions::after { 
-      width: 100%; 
-      left: 0; 
-    } */
-  /* .token {
-      align-items: center;
-      background-color: hsl(214, 17%, 92%);
-      border-radius: 1.25rem;
-      display: flex;
-      margin: .25rem .5rem .25rem 0;
-      max-height: 1.3rem;
-      padding: .25rem .5rem .25rem .5rem;
-      transition: background-color .3s;
-      white-space: nowrap;
-    }  */
+  
   .token:hover {
     background-color: hsl(214, 15%, 88%);
   }

@@ -1,64 +1,49 @@
 <script lang="ts">
-  import type { Disease, FoodItem } from "../types";
+  import type { FoodItem } from "../types";
   import { IconCheck, IconPlus } from "@tabler/icons-svelte";
-  import final_diseases from "../assets/final_diseases.json";
-  export let foodType: string[];
-  import food_data from "../assets/food_data.json";
+  export let foodType: string;
+export let filteredFood:FoodItem[];
 
-
-
-  // let foodItems =
-
-  // show the top 3 items in the list when view all is clicked show all
-  let foodItems = foodType[1].slice(0, 3);
+  // export let category: string = "Breakfast";
+  // export let filtered_food:FoodItem[] = [];
+  
+  let selectedItems:FoodItem[] = [];
+    
+  function filterFoodItemsByCategory(
+        category: string,
+        foodItems: FoodItem[]
+    ): FoodItem[] {
+        return foodItems.filter((foodItem) => {
+        return foodItem.Category === category;
+        });
+    }
+    function toggleItem(item: FoodItem) {
+      if (selectedItems.includes(item)) {
+        selectedItems = selectedItems.filter((i) => i !== item);
+      } else {
+        selectedItems = [...selectedItems, item];
+      }
+  }
+  let foodItems:FoodItem[]=[];
+  let foodItemsC:FoodItem[]=[];
+  $:  foodItems = filterFoodItemsByCategory(foodType, filteredFood);
+  $: foodItemsC = foodItems.slice(0, 3);
   let showAll = false;
   function toggleShowAll() {
     showAll = !showAll;
     if (showAll) {
-      foodItems = foodType[1];
+      foodItemsC = foodItems;
     } else {
-      foodItems = foodType[1].slice(0, 3);
+      foodItemsC = foodItems.slice(0, 3);
     }
   }
+
+// console.log(foodType);
+// console.log(filteredFood);
+  // let foodItems =
+
+  
   // set type of final_diseases to Disease[]
-  let disease = final_diseases as unknown as Disease[];
-
-  let selectedItems: string[] = [];
-
-  function filterFoodItemsByDiseases(
-    diseases: Disease[],
-    foodItems: FoodItem[]
-  ): FoodItem[] {
-
-    return foodItems.filter((foodItem) => {
-      for (let i = 0; i < diseases.length; i++) {
-        const disease = diseases[i];
-        if (
-          foodItem.Carbs > disease.Carbs ||
-          foodItem.Total_Fat > disease.Total_Fat ||
-          foodItem.Saturated_Fat > disease.Saturated_Fat ||
-          foodItem.Protein > disease.Protein ||
-          foodItem.Fiber > disease.Fiber ||
-          foodItem.Cholesterol > disease.Cholesterol ||
-          foodItem.Sodium > disease.Sodium ||
-          foodItem.Sugar > disease.Sugar ||
-          foodItem.Potassium > disease.Potassium ||
-          foodItem.Magnesium > disease.Magnesium ||
-          foodItem.Phosphorus > disease.Phosphorus ||
-          foodItem.Vitamin_C > disease.Vitamin_C ||
-          foodItem.Vitamin_A > disease.Vitamin_A ||
-          foodItem.Calcium > disease.Calcium ||
-          foodItem.Iron > disease.Iron ||
-          foodItem.Zinc > disease.Zinc ||
-          foodItem.Vitamin_E > disease.Vitamin_E ||
-          foodItem.Vitamin_K > disease.Vitamin_K
-        ) {
-          return false;
-        }
-      }
-      return true;
-    });
-  }
 
 
 </script>
@@ -66,6 +51,7 @@
 <li>
   <div class="flex space-x-4">
     <h3 class="text-primary text-3xl font-semibold">
+      <!-- {foodType} -->
       {foodType}
     </h3>
     <button
@@ -77,9 +63,10 @@
       View all
     </button>
   </div>
-  <!-- <div class="my-4">
+
+  <div class="my-4">
     <ul class="flex flex-wrap">
-      {#each foodItems as food}
+      {#each foodItemsC as food}
         <li>
           <button
             on:click={() => toggleItem(food)}
@@ -90,7 +77,7 @@
               : ' bg-white  text-black'} px-5 py-3"
           >
             <p>
-              {food}
+              {food.food_items}
             </p>
             {#if selectedItems.includes(food)}
               <IconCheck
@@ -108,5 +95,6 @@
         </li>
       {/each}
     </ul>
-  </div> -->
+  </div>
+  
 </li>

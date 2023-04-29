@@ -5,6 +5,8 @@
   import Select from "./Select.svelte";
   import DiseaseData from "../assets/final_diseases.json";
   import type { Disease } from "src/types";
+  import { createMeal } from "../store/create";
+
 
   let diseases = DiseaseData as unknown as Disease[];
   let gender = ["Male", "Female", "Other"];
@@ -44,6 +46,9 @@
       gender: genderIndex,
       veg_nonveg: vegIndex,
       disease: getDiseases(),
+    });
+    createMeal.set({
+      create: true,
     });
   }
 </script>
