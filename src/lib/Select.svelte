@@ -3,11 +3,12 @@
     export let items: string[] ;
     export let label:string;
     export let width:string;
+    export let value:string;
 </script>
 
 
 <div class="relative h-24 {width} min-w-[200px]">
-  <select  class="peer select h-full w-full rounded-[7px] border border-white border-t-transparent bg-transparent px-3 py-2.5 font-sans text-3xl font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-white placeholder-shown:border-t-white empty:!bg-red-500 focus:border-2 focus:border-white focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 ">
+  <select bind:value class="peer select h-full w-full rounded-[7px] border border-white border-t-transparent bg-transparent px-3 py-2.5 font-sans text-3xl font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-white placeholder-shown:border-t-white empty:!bg-red-500 focus:border-2 focus:border-white focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 ">
     {#each items as item}
     <option value={item}>{item}</option>
     {/each}
