@@ -1,9 +1,11 @@
- <script lang="ts">
-    import Header from "../lib/Header.svelte";
-    import FoodItemType from "../lib/FoodItemType.svelte";
-    import type { Disease, FoodItem, SelectedFoodItem } from "../types";
-    import { userInfo } from "../store/disease";
+<script lang="ts">
+  import Cal from "./../lib/Cal.svelte";
+  import Header from "../lib/Header.svelte";
+  import FoodItemType from "../lib/FoodItemType.svelte";
+  import type { Disease, FoodItem, SelectedFoodItem } from "../types";
+  import { userInfo } from "../store/disease";
   import FoodData from "../assets/food_data.json";
+  import CalorieCount from "../lib/CalorieCount.svelte";
   // export let disease: Disease[] = [];
   let currentlySelected: string = "Breakfast";
   let foodItems = FoodData as unknown as FoodItem[];
@@ -139,11 +141,9 @@
   }
 
   let filteredFood = filterFoodItemsByDiseases($userInfo.disease, foodItems);
+</script>
 
- </script>
-  
-
-  <div
+<div
   class="	bg-no-repeat bg-cover bg-center
 bg-[url('../assets/ellipse.svg')] pb-28 px-32"
 >
@@ -172,26 +172,12 @@ bg-[url('../assets/ellipse.svg')] pb-28 px-32"
 <div class="font-poppins grid grid-cols-3 space-x-6 mx-32">
   <div class="col-span-2 rounded-2xl shadow-xl py-16 px-24">
     <ul>
-     
       {#each validCategories[currentlySelected] as foodType}
-        <FoodItemType {foodType} {filteredFood} />
-        <!-- {foodType} -->
+        <FoodItemType {foodType} {filteredFood} {currentlySelected} />
       {/each}
     </ul>
   </div>
-  <div class="col-span-1 rounded-2xl shadow-xl py-16 px-14">
-    <h3 class="text-3xl font-bold text-primary mx-auto mb-12">Calculator</h3>
-    <ul>
-      <li class="flex">
-        <div class="h-4 w-4 mt-2 rounded-full bg-red-600" />
-
-        <p class="font-semibold text-2xl ml-7 mr-10">Calories</p>
-        <p class="text-xl">0.0 Kcal</p>
-      </li>
-      <li />
-      <li />
-    </ul>
-  </div>
+<CalorieCount foodType={currentlySelected}/>
   <!-- <ul>
     {#each filteredFood as fil}
         <li>{fil.food_items}</li>

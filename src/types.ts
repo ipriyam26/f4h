@@ -1,3 +1,7 @@
+export interface selectedItem{
+  category: string;
+  item: FoodItem[];
+}
 
 
 export interface FoodItem {
