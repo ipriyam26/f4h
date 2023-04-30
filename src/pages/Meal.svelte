@@ -150,18 +150,6 @@
   let filteredFood = filterFoodItemsByDiseases($userInfo.disease, foodItems);
 
 
-  function findCurrent(category: string) {
-    if (category == "Breakfast") {
-      return selectedBreakfast;
-    } else if (category == "Lunch") {
-      return selectedLunch;
-    } else if (category == "Snacks") {
-      return selectedSnacks;
-    } else if (category == "Dinner") {
-      return selectedDinner;
-    }
-  }
-
 
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {  maxBreakfast,maxDinner,maxLunch,maxSnacks  } from './../store/maxFood';
+	import {  maxBreakfast,maxDinner,maxLunch,maxSnacks, type Macors  } from './../store/maxFood';
 
-  import type { FoodItem, selectedItem } from "src/types";
+  import type {  selectedItem } from "src/types";
   import {
     selectedBreakfast,
     selectedDinner,
@@ -12,10 +12,11 @@
   import Cal from "./Cal.svelte";
   import type { Writable } from "svelte/store";
 
-  export let foodType: string;
-  let selectedItem: FoodItem[];
 
-  function findCurrent(category: string): [Writable<selectedItem>, Writable<number>] {
+
+  export let foodType: string;
+
+  function findCurrent(category: string): [Writable<selectedItem>, Writable<Macors>] {
     if (category == "Breakfast") {
       return [selectedBreakfast, maxBreakfast];
     } else if (category == "Lunch") {
@@ -27,10 +28,10 @@
     }
     
   }
-  let selectedStore:Writable<selectedItem>,maxCalorie:Writable<number>;
+  let selectedStore:Writable<selectedItem>,maxCalorie:Writable<Macors>;
   $: [selectedStore,maxCalorie] = findCurrent(foodType);
   // $: selectedItem = $findCurrent(foodType);
-
+  // let totalCalories:number=0;
   let calories: string,
     protein: string,
     fat: string,
@@ -52,42 +53,39 @@
     return acc + curr.Carbs;
   }, 0).toFixed(2);
   
+  // create a function that takes current macro and max macro and returns a color base on condition if less than < 90% than yellow, 90% to 110% green, else red
+  function macorColor(current:number,max:number):string{
+    console.log(current,max);
+    let percent = current/max;
+    if(percent < 0.9){
+      return "yellow";
+    }else if(percent > 1.1){
+      return "red";
+    }else{
+      return "green";
+    }
+  }
 
-  // function isMoreThanNeeded(category:string, carbs:string){
-  //   let carbohydrate:number = parseFloat(carbs);
-  //   let smaller:boolean=false;
-  //   if (category == "Breakfast") {
-  //   smaller=   $maxMeal.Breakfast < carbohydrate;
-  //   } else if (category == "Lunch") {
-  //     smaller= $maxMeal.Lunch < carbohydrate;
-  //   } else if (category == "Snacks") {
-  //     smaller= $maxMeal.Snacks < carbohydrate;
-  //   } else if (category == "Dinner") {
-  //     smaller= $maxMeal.Dinner < carbohydrate;
-  //   } 
-  //   return smaller?"red":"green";
+  let CalorieColor:string,ProteinColor:string,FatColor:string,CarbsColor:string;
 
-    
-  // }
-  let color:string = "green";
-  $: color = $maxCalorie < parseFloat(calories)?"red":"green";
+  $: CalorieColor = macorColor(parseFloat(calories),$maxCalorie.Calories);
+  $: ProteinColor = macorColor(parseFloat(protein),$maxCalorie.Protein);
+  $: FatColor = macorColor(parseFloat(fat),$maxCalorie.Fats);
+  $: CarbsColor = macorColor(parseFloat(carbs),$maxCalorie.Carbs); 
 
 </script>
 
 <div class="col-span-1 rounded-2xl  shadow-xl py-16 px-8">
   <h3 class="text-3xl font-bold text-primary mx-auto mb-12">Calculator</h3>
   <ul class="space-y-12 w-full">
-    <Cal title="Calories" value={calories} color={color} />
-    <Cal title="Protien" value={protein}  color={"green"} />
-    <Cal title="Fat" value={fat}  color={"green"} />
-    <Cal title="Carbs" value={carbs}  color={"green"} />
+    <Cal title="Calories" value={calories} color={CalorieColor} unit={"Kcal"} />
+    <Cal title="Protien" value={protein}  color={ProteinColor} unit={"g"} />
+    <Cal title="Fat" value={fat}  color={FatColor} unit={"g"} />
+    <Cal title="Carbs" value={carbs}  color={CarbsColor} unit={"g"}/>
+
   </ul>
 
   <div class="bg-primary text-3xl mt-12 font-semibold py-4 rounded-xl text-white">
     Diet Chart
   </div>
-  <!-- <p>
-    {color}
-    {$maxCalorie}
-  </p> -->
 </div>

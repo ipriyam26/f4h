@@ -1,5 +1,4 @@
 <script lang="ts">
-  import SelectedItem from "./SelectedItem.svelte";
   export let mealTime: string;
   import {
     selectedBreakfast,

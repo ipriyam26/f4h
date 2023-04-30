@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { maxBreakfast,maxDinner,maxLunch,maxSnacks } from "../store/maxFood";
+  import {
+    maxBreakfast,
+    maxDinner,
+    maxLunch,
+    maxSnacks,
+  } from "../store/maxFood";
   import { userInfo } from "../store/disease";
   import MultiSelect from "./MultiSelect.svelte";
   import TextField from "./TextField.svelte";
@@ -37,104 +42,129 @@
     return selectedDiseasesData;
   }
 
-  function calculateBmr(
-    weight: number,
-    height: number,
-    age: number,
-    gender: string
-  ): number | null {
-    let bmr: number;
-    if (gender === "Male") {
-      bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-    } else {
-      bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-    }
-    return bmr;
+  // function calculateBmr(
+  //   weight: number,
+  //   height: number,
+  //   age: number,
+  //   gender: string
+  // ): number | null {
+  //   let bmr: number;
+  //   if (gender === "Male") {
+  //     bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  //   } else {
+  //     bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  //   }
+  //   return bmr;
+  // }
+
+  // function calculateCalories(
+  //   bmr: number,
+  //   activityLevel: string
+  // ): number | null {
+  //   let pal: number;
+  //   if (activityLevel === "Little or no exercise") {
+  //     pal = 1.2;
+  //   } else if (activityLevel === "Exercise 1-3 times/week") {
+  //     pal = 1.375;
+  //   } else if (activityLevel === "Intense Exercise daily") {
+  //     pal = 1.55;
+  //   } else if (activityLevel === "Intense Exercise 6-7 times/week") {
+  //     pal = 1.725;
+  //   } else if (
+  //     activityLevel === "Exercise or Intense Exercise 3-4 times/week"
+  //   ) {
+  //     pal = 1.9;
+  //   } else {
+  //     pal = 1.9;
+  //   }
+  //   const calories = bmr * pal;
+  //   return calories;
+  // }
+
+  // for each disease in the diseases array, find find the lower bound for calories, protien, carbs and fat
+  function getNutrition(diseases: Disease[]) {
+    // let calories: number = 10000;
+    let protein: number = 10000;
+    let carbs: number = 10000;
+    let fat: number = 10000;
+
+    // find the lowest value for each nutrition for all diseases
+    diseases.forEach((disease) => {
+      if (disease.Protein < protein) {
+        protein = disease.Protein;
+      }
+      if (disease.Carbs < carbs) {
+        carbs = disease.Carbs;
+      }
+      if (disease.Total_Fat < fat) {
+        fat = disease.Total_Fat;
+      }
+    });
+
+    return { protein, carbs, fat };
   }
 
-  function calculateCalories(
-    bmr: number,
-    activityLevel: string
-  ): number | null {
-    let pal: number;
-    if (activityLevel === "Little or no exercise") {
-      pal = 1.2;
-    } else if (activityLevel === "Exercise 1-3 times/week") {
-      pal = 1.375;
-    } else if (activityLevel === "Intense Exercise daily") {
-      pal = 1.55;
-    } else if (activityLevel === "Intense Exercise 6-7 times/week") {
-      pal = 1.725;
-    } else if (
-      activityLevel === "Exercise or Intense Exercise 3-4 times/week"
-    ) {
-      pal = 1.9;
-    } else {
-      pal = 1.9;
-    }
-    const calories = bmr * pal;
-    return calories;
-  }
   function isNumber(input: string): boolean {
     return /^-?\d+(\.\d+)?$/.test(input);
-}
+  }
 
-
-  function store(weight:number,height:number,age:number) {
+  function store(weight: number, height: number, age: number) {
     userInfo.set({
-      // age: age,
-      // height: height,
-      // weight: weight,
-      // activity: exerciseIndex,
-      // gender: genderIndex,
-      // veg_nonveg: vegIndex,
+      weight: weight,
       disease: getDiseases(),
     });
 
-    let calories = calculateCalories(
-      calculateBmr(weight, height, age, genderIndex),
-      exerciseIndex
-    );
-    maxBreakfast.set(0.33*calories);
-    maxLunch.set(0.3*calories);
-    maxSnacks.set(0.1*calories);
-    maxDinner.set(0.27*calories);
-    // maxMeal.set({
-    //   Breakfast: 0.33 * calories,
-    //   Lunch: 0.3 * calories,
-    //   Snacks: 0.1 * calories,
-    //   Dinner: 0.27 * calories,
-    // });
+    let { protein, carbs, fat } = getNutrition(getDiseases());
+    maxBreakfast.set({
+      Protein: 0.37 * protein,
+      Carbs: 0.37 * carbs,
+      Fats: 0.3 * fat,
+      Calories: 0.3 * fat * 8 + 0.37 * carbs * 4 + 0.37 * protein * 4,
+    });
+    maxLunch.set({
+      Protein: 0.3 * protein,
+      Carbs: 0.35 * carbs,
+      Fats: 0.35 * fat,
+      Calories: 0.35 * fat * 8 + 0.35 * carbs * 4 + 0.3 * protein * 4,
+    });
+    maxSnacks.set({
+      Protein: 0.05 * protein,
+      Carbs: 0.1 * carbs,
+      Fats: 0.1 * fat,
+      Calories: 0.1 * fat * 8 + 0.1 * carbs * 4 + 0.05 * protein * 4,
+    });
+    maxDinner.set({
+      Protein: 0.28 * protein,
+      Carbs: 0.25 * carbs,
+      Fats: 0.25 * fat,
+      Calories: 0.25 * fat * 8 + 0.25 * carbs * 4 + 0.28 * protein * 4,
+    });
     createMeal.set({
       create: true,
     });
   }
   function isInteger(input: string): boolean {
-  return /^\d+$/.test(input);
-}
-
+    return /^\d+$/.test(input);
+  }
 
   function validate_and_store() {
-  // Validate if all the fields are filled and are of valid type
-  if (age && height && weight && genderIndex && exerciseIndex && vegIndex) {
-    let weightF = parseFloat(weight);
-    let heightF = parseFloat(height);
-    let ageF = parseInt(age);
-    console.log(weightF, heightF, ageF);
+    // Validate if all the fields are filled and are of valid type
+    if (age && height && weight && genderIndex && exerciseIndex && vegIndex) {
+      let weightF = parseFloat(weight);
+      let heightF = parseFloat(height);
+      let ageF = parseInt(age);
+      console.log(weightF, heightF, ageF);
 
-    // Check if the inputs are valid numbers
-    if (!isNumber(weight) || !isNumber(height) || !isInteger(age)) {
-      alert("Please enter valid data");
+      // Check if the inputs are valid numbers
+      if (!isNumber(weight) || !isNumber(height) || !isInteger(age)) {
+        alert("Please enter valid data");
+      } else {
+        store(weightF, heightF, ageF);
+      }
     } else {
-      store(weightF, heightF, ageF);
+      alert("Please fill all the fields");
     }
-  } else {
-    alert("Please fill all the fields");
   }
-}
-
-
-
 </script>
 
 <div>

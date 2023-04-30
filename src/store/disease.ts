@@ -13,7 +13,7 @@ import type { Disease} from "../types";
 interface selectedItems {
     // age: string;
     // height: string;
-    // weight: string;
+    weight: number;
     // activity:string;
     // gender:string;
     // veg_nonveg:string;
@@ -24,7 +24,7 @@ interface selectedItems {
 export const userInfo:Writable<selectedItems> = writable({
     // age: "0",
     // height: "0",
-    // weight: "0",
+    weight: 0,
     // activity:"",
     // gender:"",
     // veg_nonveg:"",
