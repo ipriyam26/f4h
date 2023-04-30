@@ -1,10 +1,5 @@
 <script lang="ts">
-  import {
-    selectedBreakfast,
-    selectedLunch,
-    selectedSnacks,
-    selectedDinner,
-  } from "../store/selectedFood";
+
   import Header from "../lib/Header.svelte";
   import FoodItemType from "../lib/FoodItemType.svelte";
   import type { Disease, FoodItem } from "../types";

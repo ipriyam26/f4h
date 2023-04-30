@@ -4,6 +4,7 @@
 
   import Home from "./pages/home.svelte";
   import Meal from './pages/Meal.svelte';
+  import Ingredients from './pages/Ingredients.svelte';
 
 
 
@@ -14,11 +15,12 @@
   <!-- <p>
     {$createMeal.create}
   </p> -->
-  {#if $createMeal.create}
+  <!-- {#if $createMeal.create}
   <Meal/>
   {:else}
   <Home/>
-  {/if}
+  {/if} -->
+  <Ingredients/>
 </main>
 
 
