@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { maxBreakfast,maxDinner,maxLunch,maxSnacks } from "../store/maxFood";
   import { userInfo } from "../store/disease";
   import MultiSelect from "./MultiSelect.svelte";
   import TextField from "./TextField.svelte";
@@ -6,7 +7,6 @@
   import DiseaseData from "../assets/final_diseases.json";
   import type { Disease } from "src/types";
   import { createMeal } from "../store/create";
-
 
   let diseases = DiseaseData as unknown as Disease[];
   let gender = ["Male", "Female", "Other"];
@@ -20,9 +20,9 @@
   ];
   let veg = ["Vegetarian", "Non-Vegetarian"];
   let selectedDiseases: string[] = [];
-  let age: number;
-  let height: number;
-  let weight: number;
+  let age: string;
+  let height: string;
+  let weight: string;
   let genderIndex: string;
   let exerciseIndex: string;
   let vegIndex: string;
@@ -37,24 +37,108 @@
     return selectedDiseasesData;
   }
 
-  function store() {
+  function calculateBmr(
+    weight: number,
+    height: number,
+    age: number,
+    gender: string
+  ): number | null {
+    let bmr: number;
+    if (gender === "Male") {
+      bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+    } else {
+      bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+    }
+    return bmr;
+  }
+
+  function calculateCalories(
+    bmr: number,
+    activityLevel: string
+  ): number | null {
+    let pal: number;
+    if (activityLevel === "Little or no exercise") {
+      pal = 1.2;
+    } else if (activityLevel === "Exercise 1-3 times/week") {
+      pal = 1.375;
+    } else if (activityLevel === "Intense Exercise daily") {
+      pal = 1.55;
+    } else if (activityLevel === "Intense Exercise 6-7 times/week") {
+      pal = 1.725;
+    } else if (
+      activityLevel === "Exercise or Intense Exercise 3-4 times/week"
+    ) {
+      pal = 1.9;
+    } else {
+      pal = 1.9;
+    }
+    const calories = bmr * pal;
+    return calories;
+  }
+  function isNumber(input: string): boolean {
+    return /^-?\d+(\.\d+)?$/.test(input);
+}
+
+
+  function store(weight:number,height:number,age:number) {
     userInfo.set({
-      age: age,
-      height: height,
-      weight: weight,
-      activity: exerciseIndex,
-      gender: genderIndex,
-      veg_nonveg: vegIndex,
+      // age: age,
+      // height: height,
+      // weight: weight,
+      // activity: exerciseIndex,
+      // gender: genderIndex,
+      // veg_nonveg: vegIndex,
       disease: getDiseases(),
     });
+
+    let calories = calculateCalories(
+      calculateBmr(weight, height, age, genderIndex),
+      exerciseIndex
+    );
+    maxBreakfast.set(0.33*calories);
+    maxLunch.set(0.3*calories);
+    maxSnacks.set(0.1*calories);
+    maxDinner.set(0.27*calories);
+    // maxMeal.set({
+    //   Breakfast: 0.33 * calories,
+    //   Lunch: 0.3 * calories,
+    //   Snacks: 0.1 * calories,
+    //   Dinner: 0.27 * calories,
+    // });
     createMeal.set({
       create: true,
     });
   }
+  function isInteger(input: string): boolean {
+  return /^\d+$/.test(input);
+}
+
+
+  function validate_and_store() {
+  // Validate if all the fields are filled and are of valid type
+  if (age && height && weight && genderIndex && exerciseIndex && vegIndex) {
+    let weightF = parseFloat(weight);
+    let heightF = parseFloat(height);
+    let ageF = parseInt(age);
+    console.log(weightF, heightF, ageF);
+
+    // Check if the inputs are valid numbers
+    if (!isNumber(weight) || !isNumber(height) || !isInteger(age)) {
+      alert("Please enter valid data");
+    } else {
+      store(weightF, heightF, ageF);
+    }
+  } else {
+    alert("Please fill all the fields");
+  }
+}
+
+
+
 </script>
 
 <div>
-  <img src="src/assets/wave.svg" alt="sin wave" />
+  <img src="../assets/wave.svg" alt="sin wave" />
   <div class="bg-primary py-16 px-56">
     <h2 class="text-6xl font-bold text-white">Calculator</h2>
     <div class="py-36 space-y-16">
@@ -96,17 +180,15 @@
       </div>
       <button
         class="bg-white text-primary w-full h-24 rounded-lg font-poppins font-semibold text-2xl"
-        on:click={store}
-        >Create Diet Plan</button
+        on:click={validate_and_store}>Create Diet Plan</button
       >
     </div>
     <div>
       <p>
         {#each $userInfo.disease as disease}
-      <p>
-        {disease.Disease}
-
-      </p>
+          <p>
+            {disease.Disease}
+          </p>
         {/each}
       </p>
     </div>

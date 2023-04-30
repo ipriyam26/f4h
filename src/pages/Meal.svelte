@@ -1,12 +1,19 @@
 <script lang="ts">
-  import Cal from "./../lib/Cal.svelte";
+  import {
+    selectedBreakfast,
+    selectedLunch,
+    selectedSnacks,
+    selectedDinner,
+  } from "../store/selectedFood";
   import Header from "../lib/Header.svelte";
   import FoodItemType from "../lib/FoodItemType.svelte";
-  import type { Disease, FoodItem, SelectedFoodItem } from "../types";
+  import type { Disease, FoodItem } from "../types";
   import { userInfo } from "../store/disease";
   import FoodData from "../assets/food_data.json";
   import CalorieCount from "../lib/CalorieCount.svelte";
-  // export let disease: Disease[] = [];
+  import Footer from "../lib/Footer.svelte";
+  import { IconDownload } from "@tabler/icons-svelte";
+  import MealTime from "../lib/MealTime.svelte";
   let currentlySelected: string = "Breakfast";
   let foodItems = FoodData as unknown as FoodItem[];
   function changeSelected(index: string) {
@@ -141,6 +148,21 @@
   }
 
   let filteredFood = filterFoodItemsByDiseases($userInfo.disease, foodItems);
+
+
+  function findCurrent(category: string) {
+    if (category == "Breakfast") {
+      return selectedBreakfast;
+    } else if (category == "Lunch") {
+      return selectedLunch;
+    } else if (category == "Snacks") {
+      return selectedSnacks;
+    } else if (category == "Dinner") {
+      return selectedDinner;
+    }
+  }
+
+
 </script>
 
 <div
@@ -170,17 +192,55 @@ bg-[url('../assets/ellipse.svg')] pb-28 px-32"
   </ul>
 </div>
 <div class="font-poppins grid grid-cols-3 space-x-6 mx-32">
-  <div class="col-span-2 rounded-2xl shadow-xl py-16 px-24">
+  <div
+    class="col-span-2 h-[747px] overflow-y-scroll rounded-2xl shadow-xl py-16 px-24"
+  >
     <ul>
       {#each validCategories[currentlySelected] as foodType}
         <FoodItemType {foodType} {filteredFood} {currentlySelected} />
       {/each}
     </ul>
   </div>
-<CalorieCount foodType={currentlySelected}/>
+  <CalorieCount foodType={currentlySelected} />
   <!-- <ul>
     {#each filteredFood as fil}
         <li>{fil.food_items}</li>
     {/each}
   </ul> -->
 </div>
+<div
+  class=" bg-hero-pattern mt-10 rounded-2xl bg-primary bg-cover bg-center bg-no-repeat mx-32"
+>
+  <h2 class="text-5xl font-bold text-white py-20">Your Diet Plan</h2>
+  <ul class="flex mx-36  justify-between">
+
+      {#each Object.keys(validCategories) as mealTime}
+        <li  >
+          <div
+            class="bg-white text-primary mb-11 font-semibold py-3 px-4 text-2xl rounded-xl"
+          >
+                {mealTime}
+                </div>
+          <div class="h-[451px]  overflow-y-scroll">
+            {#each validCategories[mealTime] as foodType}
+              <!-- <FoodItemType {foodType} {filteredFood} {currentlySelected} /> -->
+              <MealTime {mealTime} {foodType}  />
+            {/each}
+          </div>
+        </li>
+
+      {/each}
+
+  </ul>
+
+  <div class="mt-24">
+    <button class="flex space-x-3 py-4 px-6 font-poppins  bg-white mx-auto rounded-xl">
+      <div class="bg-primary p-1.5 rounded-full">
+        <IconDownload color="white" stroke={3}/>
+      </div>
+      <p class="text-primary font-semibold text-2xl">Download as PDF</p>
+    </button>
+  </div>
+  <div class="h-14"></div>
+</div>
+<Footer />

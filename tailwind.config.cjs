@@ -9,6 +9,11 @@ module.exports = {
   theme: {
 
     extend: {
+
+      backgroundImage: {
+        'hero-pattern': "url('assets/background.svg')",
+      },
+
       colors: {
         "secondary": "#FFF8E5",
         "primary": "#BA68C8",
