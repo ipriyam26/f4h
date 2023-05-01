@@ -2,7 +2,7 @@
 	import { createMeal } from './store/create';
 
 
-  import Home from "./pages/Home.svelte";
+  // import Home from "$lib/pages/Home.svelte";
   import Meal from './pages/Meal.svelte';
   import Ingredients from './pages/Ingredients.svelte';
   import About from './pages/About.svelte';
@@ -13,9 +13,9 @@
 </script>
 
 <main class="text-center">
-  {#if $createMeal.create==1}
-  <Home/>
-  {:else if $createMeal.create==2}
+  <!-- {#if $createMeal.create==1}
+  <Home/> -->
+  {#if $createMeal.create==2}
   <Meal/>
   {:else if $createMeal.create==3}
   <Ingredients/>
