@@ -3,6 +3,7 @@
   import Header from "../lib/Header.svelte";
   import type { FoodItem } from "../types";
   import food_items from "../assets/food_data.json";
+  import Footer from "../lib/Footer.svelte";
 
   let foodItems = food_items as unknown as FoodItem[];
   let value: string[] = [];
@@ -24,7 +25,7 @@
       <option value={foodItem.food_items}>{foodItem.food_items}</option>
     {/each}
   </SearchBar>
-  <div class="bg-primary mt-9 py-16 rounded-3xl first-letter px-40  ">
+  <div class="bg-primary mt-9 py-16 rounded-3xl first-letter px-36 ">
     <h3 class="text-white text-4xl font-poppins font-semibold">Nutrition</h3>
     <ul class="flex font-poppins mt-16 justify-between">
       <li class="bg-secondary py-9 px-12 rounded-2xl">
@@ -43,7 +44,7 @@
         <h4 class="font-semibold text-2xl text-primary">Carbs</h4>
         <p class="font-semibold text-5xl mt-9">{
           selectedFoods.reduce((acc, food) => acc + food.Carbs, 0).toFixed(2)
-          }</p>
+          }g</p>
       </li>
       <li class="bg-secondary py-9 px-12 rounded-2xl">
         <h4 class="font-semibold text-2xl text-primary">Fat</h4>
@@ -128,8 +129,8 @@
       </li>
       <li>
         <ul>
-          <li class="text-black font-poppins font-normal text-2xl mb-11">
-          ""
+          <li class="text-white font-poppins font-normal text-2xl mb-11">
+          hello
           </li>
           {#each selectedFoods as food}
             <li class="mb-9"  >
@@ -146,25 +147,8 @@
           {/each}
         </ul>
       </li>
-      <!-- <li class="px-7">
-        
-        <ul class="flex w-full justify-between">
-          <li class="text-black font-poppins font-medium text-2xl">
-            {food.food_items}
-          </li>
-          <li class="text-black font-poppins font-medium text-2xl">
-            {food.weight} 
-          </li>
-          <li class="text-black font-poppins font-medium text-2xl">
-            {food.Calories}
-          </li>
-          <li class="text-black font-poppins font-medium text-2xl">
-            {food.Protein}
-          </li>
-          <li class="text-black font-poppins font-medium text-2xl">{food.Carbs}</li>
-          <li />
-        </ul>
-      </li> -->
+
     </ul>
   </div>
+  <Footer />
 </div>
