@@ -6,8 +6,6 @@
   import Footer from "./Footer.svelte";
 
 
- 
-
 </script>
 
 <div class=" mx-16">

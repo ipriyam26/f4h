@@ -12,6 +12,9 @@
         <button
           on:click={() => {
             createMeal.set({ create: 3 });
+            window.scrollTo({
+              top: 0,
+            });
           }}
         >
           Create Meal

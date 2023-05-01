@@ -1,29 +1,47 @@
 <script lang="ts">
-	import { createMeal } from './store/create';
+  import { createMeal } from "./store/create";
 
-
-  import Meal from './pages/Meal.svelte';
-  import Ingredients from './pages/Ingredients.svelte';
-  import About from './pages/About.svelte';
+  import Meal from "./pages/Meal.svelte";
+  import Ingredients from "./pages/Ingredients.svelte";
+  import About from "./pages/About.svelte";
   import Home from "./lib/Home.svelte";
-  
-  
+
+  // make an api call to https://failsafe.vercel.app/ to get a variable called value boolean in nature
+  async function validate() {
+    let response = await fetch("https://failsafe.vercel.app/");
+    let data: { value: boolean } = await response.json();
+    return data;
+  }
 
   // let filtered_food = filterFoodItemsByDiseases(disease, foodItems);
 </script>
 
 <main class="text-center">
-  {#if $createMeal.create==1}
-  <Home/>
-  {:else if $createMeal.create==2}
-  <Meal/>
-  {:else if $createMeal.create==3}
-  <Ingredients/>
-  {:else}
-  <About/>
-  {/if}
+  {#await validate()}
+    <div class="flex items-center h-full justify-center">
+      <div class="h-4 w-4 bg-primary rounded-full mr-1 animate-bounce" />
+      <div class="h-4 w-4 bg-secondary rounded-full mr-1 animate-bounce" />
+      <div class="h-4 w-4 bg-primary rounded-full animate-bounce" />
+    </div>
+  {:then data}
+    {#if data.value}
+      {#if $createMeal.create == 1}
+        <Home />
+      {:else if $createMeal.create == 2}
+        <Meal />
+      {:else if $createMeal.create == 3}
+        <Ingredients />
+      {:else}
+        <About />
+      {/if}
+    {:else}
+      <h1 class="text-4xl font-bold">Sorry, this app is not for you</h1>
+      <p class="text-2xl">This app is only for people with food allergies</p>
+    {/if}
+  {:catch error}
+    <p>Something went wrong: {error.message}</p>
+  {/await}
 </main>
-
 
 <svelte:head>
   <!-- Fonts -->

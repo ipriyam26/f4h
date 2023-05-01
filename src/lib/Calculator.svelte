@@ -42,45 +42,6 @@
     return selectedDiseasesData;
   }
 
-  // function calculateBmr(
-  //   weight: number,
-  //   height: number,
-  //   age: number,
-  //   gender: string
-  // ): number | null {
-  //   let bmr: number;
-  //   if (gender === "Male") {
-  //     bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-  //   } else {
-  //     bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-  //   }
-  //   return bmr;
-  // }
-
-  // function calculateCalories(
-  //   bmr: number,
-  //   activityLevel: string
-  // ): number | null {
-  //   let pal: number;
-  //   if (activityLevel === "Little or no exercise") {
-  //     pal = 1.2;
-  //   } else if (activityLevel === "Exercise 1-3 times/week") {
-  //     pal = 1.375;
-  //   } else if (activityLevel === "Intense Exercise daily") {
-  //     pal = 1.55;
-  //   } else if (activityLevel === "Intense Exercise 6-7 times/week") {
-  //     pal = 1.725;
-  //   } else if (
-  //     activityLevel === "Exercise or Intense Exercise 3-4 times/week"
-  //   ) {
-  //     pal = 1.9;
-  //   } else {
-  //     pal = 1.9;
-  //   }
-  //   const calories = bmr * pal;
-  //   return calories;
-  // }
-
   // for each disease in the diseases array, find find the lower bound for calories, protien, carbs and fat
   function getNutrition(diseases: Disease[]) {
     // let calories: number = 10000;
@@ -212,15 +173,6 @@
         class="bg-white text-primary w-full h-24 rounded-lg font-poppins font-semibold text-2xl"
         on:click={validate_and_store}>Create Diet Plan</button
       >
-    </div>
-    <div>
-      <p>
-        {#each $userInfo.disease as disease}
-          <p>
-            {disease.Disease}
-          </p>
-        {/each}
-      </p>
     </div>
   </div>
 </div>
