@@ -2,6 +2,7 @@
   import SearchBar from "../lib/SearchBar.svelte";
   import Header from "../lib/Header.svelte";
   import type { FoodItem } from "../types";
+  import SelectedList from "../lib/SelectedList.svelte";
   import food_items from "../assets/food_data.json";
   import Footer from "../lib/Footer.svelte";
 
@@ -13,6 +14,49 @@
   $: selectedFoods = value.map((v) =>
     foodItems.find((f) => f.food_items === v)
   );
+
+//   export interface FoodItem {
+//   food_items: string;
+//   Avg_Serving_Size: number;
+//   Calories: number;
+//   Category: string;
+//   Carbs: number;
+//   Total_Fat: number;
+//   Saturated_Fat: number;
+//   Protein: number;
+//   Fiber: number;
+//   Cholesterol: number;
+//   Sodium: number;
+//   Sugar: number;
+//   Potassium: number;
+//   Magnesium: number;
+//   Phosphorus: number;
+//   Vitamin_C: number;
+//   Vitamin_A: number;
+//   Calcium: number;
+//   Iron: number;
+//   Zinc: number;
+//   Vitamin_E: number;
+//   Vitamin_K: number;
+// }
+
+let displayItems=['Calories','Protein','Carbs','Total_Fat']
+let keys =['Calories','Protein','Carbs','Total_Fat','Saturated_Fat','Fiber','Cholesterol','Sodium','Sugar','Potassium','Magnesium','Phosphorus','Vitamin_C','Vitamin_A','Calcium','Iron','Zinc','Vitamin_E','Vitamin_K'] 
+let showItems = false;
+let selectedLine = "Detailed Nutrition";
+// function that changes the displayItems array to show all the keys in the foodItems array and vice versa
+function toggleDisplayItems(){
+  if(showItems){
+    displayItems=['Calories','Protein','Carbs','Total_Fat'];
+    showItems=false;
+    selectedLine="Detailed Nutrition";
+  }else{
+    displayItems=keys;
+    showItems=true;
+    selectedLine="See Only Macro Nutrients"
+  }
+}
+
 </script>
 
 <div class="mx-16">
@@ -27,14 +71,20 @@
   </SearchBar>
   <div class="bg-primary mt-9 py-16 rounded-3xl first-letter px-36 ">
     <h3 class="text-white text-4xl font-poppins font-semibold">Nutrition</h3>
-    <ul class="flex font-poppins mt-16 justify-between">
-      <li class="bg-secondary py-9 px-12 rounded-2xl">
-        <h4 class="font-semibold text-2xl text-primary">Calories</h4>
-        <p class="font-semibold text-5xl mt-9">{
-          selectedFoods.reduce((acc, food) => acc + food.Calories, 0)
-          }</p>
-      </li>
-      <li class="bg-secondary py-9 px-12 rounded-2xl">
+    <ul class="flex-wrap flex font-poppins mt-16 justify-between">
+      {#each displayItems as displayItem}
+   
+        <li class="bg-secondary w-52 h-52 py-9  mt-8 rounded-2xl">
+          <h4 class="font-semibold text-2xl text-primary">{
+            displayItem.replaceAll('_',' ')
+            }</h4>
+          <p class="font-semibold text-5xl text-center mt-9">{
+            selectedFoods.reduce((acc, food) => acc + food[displayItem], 0).toFixed(2)
+            }</p>
+        </li>
+      {/each}
+     
+      <!-- <li class="bg-secondary py-9 px-12 rounded-2xl">
         <h4 class="font-semibold text-2xl text-primary">Protein</h4>
         <p class="font-semibold text-5xl mt-9">{
           selectedFoods.reduce((acc, food) => acc + food.Protein, 0).toFixed(2)
@@ -51,9 +101,16 @@
         <p class="font-semibold text-5xl mt-9">{
           selectedFoods.reduce((acc, food) => acc + food.Total_Fat, 0).toFixed(2)
           }g</p>
-      </li>
+      </li> -->
     </ul>
+    <button
+    on:click={toggleDisplayItems}
+    class="mt-12 underline text-white font-poppins text-2xl ">
+{selectedLine}
+  </button>
+   
   </div>
+
   <div class="mt-16 w-full bg-white p-12 rounded-2xl">
     <ul class="flex justify-between ">
       <li>
@@ -75,7 +132,7 @@
           </li>
           {#each selectedFoods as food}
             <li class="font-poppins font-medium text-2xl text-black mb-11">
-              {50}
+              {food.Avg_Serving_Size}
             </li>
           {/each}
         </ul>
@@ -150,5 +207,6 @@
 
     </ul>
   </div>
+
   <Footer />
 </div>
