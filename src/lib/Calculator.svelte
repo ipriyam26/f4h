@@ -140,7 +140,7 @@
       Calories: 0.25 * fat * 8 + 0.25 * carbs * 4 + 0.28 * protein * 4,
     });
     createMeal.set({
-      create: true,
+      create: 2,
     });
   }
   function isInteger(input: string): boolean {

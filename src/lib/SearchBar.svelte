@@ -184,7 +184,7 @@ import { onMount } from "svelte";
 
   {#if showOptions}
     <ul
-    class="h-96 overflow-y-scroll"
+    class="h-96 overflow-y-scroll z-10"
       transition:fly={{ duration: 200, y: 5 }}
       on:mousedown|preventDefault={handleOptionMousedown}
     >

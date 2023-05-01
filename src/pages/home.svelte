@@ -14,7 +14,10 @@
   <Header />
   <Landing />
 </div>
-<Calculator />
+<div id="calulator">
+  <Calculator  />
+
+</div>
 <div>
   <FaQs />
   <Footer />

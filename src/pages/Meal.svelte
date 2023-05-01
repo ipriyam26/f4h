@@ -1,5 +1,11 @@
 <script lang="ts">
 
+import {
+    selectedBreakfast,
+    selectedLunch,
+    selectedSnacks,
+    selectedDinner,
+  } from "../store/selectedFood";
   import Header from "../lib/Header.svelte";
   import FoodItemType from "../lib/FoodItemType.svelte";
   import type { Disease, FoodItem } from "../types";
@@ -9,6 +15,7 @@
   import Footer from "../lib/Footer.svelte";
   import { IconDownload } from "@tabler/icons-svelte";
   import MealTime from "../lib/MealTime.svelte";
+  import { downloadDataAsPDF } from "../Download";
   let currentlySelected: string = "Breakfast";
   let foodItems = FoodData as unknown as FoodItem[];
   function changeSelected(index: string) {
@@ -217,7 +224,16 @@ bg-[url('../assets/ellipse.svg')] pb-28 px-32"
   </ul>
 
   <div class="mt-24">
-    <button class="flex space-x-3 py-4 px-6 font-poppins  bg-white mx-auto rounded-xl">
+    <button
+    on:click={() => {
+      downloadDataAsPDF([
+        $selectedBreakfast,
+        $selectedLunch,
+        $selectedSnacks,
+        $selectedDinner,
+      ]);
+    }}
+    class="flex space-x-3 py-4 px-6 font-poppins  bg-white mx-auto rounded-xl">
       <div class="bg-primary p-1.5 rounded-full">
         <IconDownload color="white" stroke={3}/>
       </div>
