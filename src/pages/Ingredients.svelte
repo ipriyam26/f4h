@@ -6,38 +6,165 @@
 
   let foodItems = food_items as unknown as FoodItem[];
   let value: string[] = [];
+
+  // function to find element in array value matching foodItems.food_items
+  let selectedFoods: FoodItem[] = [];
+  $: selectedFoods = value.map((v) =>
+    foodItems.find((f) => f.food_items === v)
+  );
 </script>
 
 <div class="mx-16">
   <Header style={false} />
-  <h2 class="text-4xl font-semibold font-poppins text-black mt-36 mb-9">Add Ingredients</h2>
-  <SearchBar id="lang"  bind:value>
+  <h2 class="text-4xl font-semibold font-poppins text-black mt-36 mb-9">
+    Add Ingredients
+  </h2>
+  <SearchBar id="lang" bind:value>
     {#each foodItems as foodItem}
       <option value={foodItem.food_items}>{foodItem.food_items}</option>
     {/each}
   </SearchBar>
-  <div class="bg-primary mt-9 py-16 rounded-3xl first-letter px-56">
-    <h3 class="text-white text-4xl font-poppins font-semibold  ">
-        Nutrition
-    </h3>
+  <div class="bg-primary mt-9 py-16 rounded-3xl first-letter px-40  ">
+    <h3 class="text-white text-4xl font-poppins font-semibold">Nutrition</h3>
     <ul class="flex font-poppins mt-16 justify-between">
+      <li class="bg-secondary py-9 px-12 rounded-2xl">
+        <h4 class="font-semibold text-2xl text-primary">Calories</h4>
+        <p class="font-semibold text-5xl mt-9">{
+          selectedFoods.reduce((acc, food) => acc + food.Calories, 0)
+          }</p>
+      </li>
+      <li class="bg-secondary py-9 px-12 rounded-2xl">
+        <h4 class="font-semibold text-2xl text-primary">Protein</h4>
+        <p class="font-semibold text-5xl mt-9">{
+          selectedFoods.reduce((acc, food) => acc + food.Protein, 0).toFixed(2)
+          }g</p>
+      </li>
+      <li class="bg-secondary py-9 px-12 rounded-2xl">
+        <h4 class="font-semibold text-2xl text-primary">Carbs</h4>
+        <p class="font-semibold text-5xl mt-9">{
+          selectedFoods.reduce((acc, food) => acc + food.Carbs, 0).toFixed(2)
+          }</p>
+      </li>
+      <li class="bg-secondary py-9 px-12 rounded-2xl">
+        <h4 class="font-semibold text-2xl text-primary">Fat</h4>
+        <p class="font-semibold text-5xl mt-9">{
+          selectedFoods.reduce((acc, food) => acc + food.Total_Fat, 0).toFixed(2)
+          }g</p>
+      </li>
+    </ul>
+  </div>
+  <div class="mt-16 w-full bg-white p-12 rounded-2xl">
+    <ul class="flex justify-between ">
+      <li>
+        <ul>
+          <li class="text-primary font-poppins font-semibold text-2xl mb-11">
+            Ingredients
+          </li>
+          {#each selectedFoods as food}
+            <li class="font-poppins font-medium text-2xl text-black mb-11 ">
+              {food.food_items}
+            </li>
+          {/each}
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li class="text-black font-poppins font-semibold text-2xl mb-11">
+           Weight 
+          </li>
+          {#each selectedFoods as food}
+            <li class="font-poppins font-medium text-2xl text-black mb-11">
+              {50}
+            </li>
+          {/each}
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li class="text-black font-poppins font-normal text-2xl mb-11">
+           Calories 
+          </li>
+          {#each selectedFoods as food}
+            <li class="font-poppins font-medium text-2xl text-black mb-11">
+              {food.Calories}
+            </li>
+          {/each}
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li class="text-black font-poppins font-normal text-2xl mb-11">
+           Protein 
+          </li>
+          {#each selectedFoods as food}
+            <li class="font-poppins font-medium text-2xl text-black mb-11">
+              {food.Protein}
+            </li>
+          {/each}
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li class="text-black font-poppins font-normal text-2xl mb-11">
+           Carbs 
+          </li>
+          {#each selectedFoods as food}
+            <li class="font-poppins font-medium text-2xl text-black mb-11">
+              {food.Carbs}
+            </li>
+          {/each}
+        </ul>
+      </li><li>
+        <ul>
+          <li class="text-black font-poppins font-normal text-2xl mb-11">
+           Fat 
+          </li>
+          {#each selectedFoods as food}
+            <li class="font-poppins font-medium text-2xl text-black mb-11">
+              {food.Total_Fat}
+            </li>
+          {/each}
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li class="text-black font-poppins font-normal text-2xl mb-11">
+          ""
+          </li>
+          {#each selectedFoods as food}
+            <li class="mb-9"  >
+              <button 
+              class="font-poppins text-base font-medium bg-[#FF8787] px-5 py-2 rounded-full "
+              on:click="{()=>{
+                // remove food from selectedFoods
+                selectedFoods = selectedFoods.filter((f) => f.food_items !== food.food_items);
+              }}">
+                Remove
 
-        <li class="bg-secondary py-9 px-12 rounded-2xl ">
-            <h4 class="font-semibold text-2xl text-primary">Calories</h4>
-            <p class="font-semibold text-5xl mt-9 ">400</p>
-        </li>
-        <li class="bg-secondary py-9 px-12 rounded-2xl ">
-            <h4 class="font-semibold text-2xl text-primary">Protein</h4>
-            <p class="font-semibold text-5xl mt-9 ">400</p>
-        </li>
-  <li class="bg-secondary py-9 px-12 rounded-2xl ">
-            <h4 class="font-semibold text-2xl text-primary">Carbs</h4>
-            <p class="font-semibold text-5xl mt-9 ">400</p>
-        </li>
-        <li class="bg-secondary py-9 px-12 rounded-2xl ">
-            <h4 class="font-semibold text-2xl text-primary">Fat</h4>
-            <p class="font-semibold text-5xl mt-9 ">400</p>
-        </li>
+              </button>
+            </li>
+          {/each}
+        </ul>
+      </li>
+      <!-- <li class="px-7">
+        
+        <ul class="flex w-full justify-between">
+          <li class="text-black font-poppins font-medium text-2xl">
+            {food.food_items}
+          </li>
+          <li class="text-black font-poppins font-medium text-2xl">
+            {food.weight} 
+          </li>
+          <li class="text-black font-poppins font-medium text-2xl">
+            {food.Calories}
+          </li>
+          <li class="text-black font-poppins font-medium text-2xl">
+            {food.Protein}
+          </li>
+          <li class="text-black font-poppins font-medium text-2xl">{food.Carbs}</li>
+          <li />
+        </ul>
+      </li> -->
     </ul>
   </div>
 </div>
