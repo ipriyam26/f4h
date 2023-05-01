@@ -5,7 +5,7 @@
   import Meal from './pages/Meal.svelte';
   import Ingredients from './pages/Ingredients.svelte';
   import About from './pages/About.svelte';
-  import Home from "./pages/Home.svelte";
+  import Home from "./lib/Home.svelte";
   
   
 
