@@ -16,7 +16,8 @@ interface selectedItems {
     weight: number;
     // activity:string;
     // gender:string;
-    // veg_nonveg:string;
+    mulitplier:number;
+    isNonVeg:boolean;
     disease:Disease[];
 }
 
@@ -24,10 +25,11 @@ interface selectedItems {
 export const userInfo:Writable<selectedItems> = writable({
     // age: "0",
     // height: "0",
+mulitplier:1,
     weight: 0,
     // activity:"",
     // gender:"",
-    // veg_nonveg:"",
+    isNonVeg:false,
     disease:[]
 });
 

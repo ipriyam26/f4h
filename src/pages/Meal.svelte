@@ -113,7 +113,7 @@ import {
     return isNonVeg ? categoriesNonVeg : categoriesVeg;
   }
 
-  const validCategories = findValidCategories(false);
+  const validCategories = findValidCategories($userInfo.isNonVeg);
 
   function filterFoodItemsByDiseases(
     diseases: Disease[],
@@ -122,25 +122,26 @@ import {
     return foodItems.filter((foodItem) => {
       for (let i = 0; i < diseases.length; i++) {
         const disease = diseases[i];
+
         if (
-          foodItem.Carbs > disease.Carbs ||
-          foodItem.Total_Fat > disease.Total_Fat ||
-          foodItem.Saturated_Fat > disease.Saturated_Fat ||
-          foodItem.Protein > disease.Protein ||
-          foodItem.Fiber > disease.Fiber ||
-          foodItem.Cholesterol > disease.Cholesterol ||
-          foodItem.Sodium > disease.Sodium ||
-          foodItem.Sugar > disease.Sugar ||
-          foodItem.Potassium > disease.Potassium ||
-          foodItem.Magnesium > disease.Magnesium ||
-          foodItem.Phosphorus > disease.Phosphorus ||
-          foodItem.Vitamin_C > disease.Vitamin_C ||
-          foodItem.Vitamin_A > disease.Vitamin_A ||
-          foodItem.Calcium > disease.Calcium ||
-          foodItem.Iron > disease.Iron ||
-          foodItem.Zinc > disease.Zinc ||
-          foodItem.Vitamin_E > disease.Vitamin_E ||
-          foodItem.Vitamin_K > disease.Vitamin_K
+          foodItem.Carbs * $userInfo.mulitplier > disease.Carbs ||
+          foodItem.Total_Fat * $userInfo.mulitplier > disease.Total_Fat ||
+          foodItem.Saturated_Fat * $userInfo.mulitplier > disease.Saturated_Fat ||
+          foodItem.Protein * $userInfo.mulitplier > disease.Protein ||
+          foodItem.Fiber * $userInfo.mulitplier > disease.Fiber ||
+          foodItem.Cholesterol * $userInfo.mulitplier > disease.Cholesterol ||
+          foodItem.Sodium * $userInfo.mulitplier > disease.Sodium ||
+          foodItem.Sugar * $userInfo.mulitplier > disease.Sugar ||
+          foodItem.Potassium * $userInfo.mulitplier > disease.Potassium ||
+          foodItem.Magnesium * $userInfo.mulitplier > disease.Magnesium ||
+          foodItem.Phosphorus * $userInfo.mulitplier > disease.Phosphorus ||
+          foodItem.Vitamin_C * $userInfo.mulitplier > disease.Vitamin_C ||
+          foodItem.Vitamin_A * $userInfo.mulitplier > disease.Vitamin_A ||
+          foodItem.Calcium * $userInfo.mulitplier > disease.Calcium ||
+          foodItem.Iron * $userInfo.mulitplier > disease.Iron ||
+          foodItem.Zinc * $userInfo.mulitplier > disease.Zinc ||
+          foodItem.Vitamin_E * $userInfo.mulitplier > disease.Vitamin_E ||
+          foodItem.Vitamin_K * $userInfo.mulitplier > disease.Vitamin_K
         ) {
           return false;
         }

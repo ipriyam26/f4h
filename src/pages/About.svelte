@@ -28,7 +28,7 @@ F4H is multiple disease-based diet recommendation system that provides a diet pl
     Our Team
 </h5>
 <div class="flex w-full justify-between">
-<People name="Darsh Kumar" link="linkedin.com/in/darsh-kumar" src="../assets/Darsh.svg" />
+<People name="Darsh Kumar" link="https://www.linkedin.com/in/darsh-kumar" src="../assets/Darsh.svg" />
 <People name="Aniket Singh" link="https://www.linkedin.com/in/aniket-singh-135a841bb" src="../assets/Aniket.svg" />
 <People name="Pranav Saini" link="https://www.linkedin.com/in/pranav-saini/"  src="../assets/Pranav.svg"/>
 </div>

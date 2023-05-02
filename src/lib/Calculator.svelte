@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Cal from './Cal.svelte';
   import {
     maxBreakfast,
     maxDinner,
@@ -18,10 +19,10 @@
   let exercise = [
     "Little or no exercise",
     "Exercise 1-3 times/week",
-    "Intense Exercise daily",
-    "Intense Exercise 6-7 times/week",
     "Exercise or Intense Exercise 3-4 times/week",
     "Exercise 4-5 times/week",
+    "Intense Exercise 6-7 times/week",
+    "Intense Exercise daily",
   ];
   let veg = ["Vegetarian", "Non-Vegetarian"];
   let selectedDiseases: string[] = [];
@@ -32,6 +33,42 @@
   let exerciseIndex: string;
   let vegIndex: string;
 
+  function calculateBmr(weight: number, height: number, age: number, gender: string): number | null {
+    let bmr: number;
+
+    if (gender === 'Male') {
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+    } else
+    {
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+    } 
+
+    return bmr;
+}
+
+function calculateCalories(bmr: number, activityLevel: string): number | null {
+    let pal: number;
+
+    if (activityLevel === exercise[0]) {
+        pal = 1.2;
+    } else if (activityLevel === exercise[1]) {
+        pal = 1.375;
+    } else if (activityLevel === exercise[2]) {
+        pal = 1.55;
+    } else if (activityLevel === exercise[3]) {
+        pal = 1.725;
+    } else if (activityLevel === exercise[4]) {
+        pal = 1.9;
+    } else if (activityLevel === exercise[5]) {
+        pal = 2.1; // I have added this value for the "Intense Exercise daily" activity level
+    } else {
+        console.log('Invalid activity level');
+        return null;
+    }
+
+    const calories: number = bmr * pal;
+    return calories;
+}
   // create a function that store diseaes in the store variable
   function getDiseases() {
     // find all the selected diseases whoes name matchs with the selectedDiseases array
@@ -45,9 +82,9 @@
   // for each disease in the diseases array, find find the lower bound for calories, protien, carbs and fat
   function getNutrition(diseases: Disease[]) {
     // let calories: number = 10000;
-    let protein: number = 10000;
-    let carbs: number = 10000;
-    let fat: number = 10000;
+    let protein: number = 100;
+    let carbs: number = 250;
+    let fat: number = 100;
 
     // find the lowest value for each nutrition for all diseases
     diseases.forEach((disease) => {
@@ -70,12 +107,23 @@
   }
 
   function store(weight: number, height: number, age: number) {
+    
+
+    let calories = calculateCalories(calculateBmr(weight,height,age,genderIndex), exerciseIndex);
+    let mulitiplier = calories / 2200 ;
     userInfo.set({
       weight: weight,
       disease: getDiseases(),
+      isNonVeg: vegIndex === "Non-Vegetarian",
+      mulitplier: mulitiplier,
     });
 
     let { protein, carbs, fat } = getNutrition(getDiseases());
+   // multiply all by multiplier
+    protein *= mulitiplier;
+    carbs *= mulitiplier;
+    fat *= mulitiplier;
+
     maxBreakfast.set({
       Protein: 0.37 * protein,
       Carbs: 0.37 * carbs,
@@ -100,6 +148,7 @@
       Fats: 0.25 * fat,
       Calories: 0.25 * fat * 8 + 0.25 * carbs * 4 + 0.28 * protein * 4,
     });
+
     createMeal.set({
       create: 2,
     });
@@ -114,7 +163,6 @@
       let weightF = parseFloat(weight);
       let heightF = parseFloat(height);
       let ageF = parseInt(age);
-      console.log(weightF, heightF, ageF);
 
       // Check if the inputs are valid numbers
       if (!isNumber(weight) || !isNumber(height) || !isInteger(age)) {
