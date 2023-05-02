@@ -122,9 +122,15 @@
       max={$maxCalorie.Carbs}
     />
   </ul>
-  <div
-    class="bg-primary text-3xl mt-12 font-semibold py-4 rounded-xl text-white"
+  <button
+    on:click={() => {
+      window.scrollTo({
+        top: 1500,
+        behavior: "smooth",
+      });
+    }}
+    class="bg-primary text-3xl mt-12 font-semibold py-4 px-4 rounded-xl text-white transition duration-300 ease-in-out"
   >
     Diet Chart
-  </div>
+  </button>
 </div>

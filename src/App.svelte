@@ -63,3 +63,34 @@
   <!-- SMUI -->
   <link rel="stylesheet" href="https://unpkg.com/svelte-material-ui/bare.css" />
 </svelte:head>
+
+<style>
+  /* Hide scrollbar by default */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #F5F5F5;
+}
+
+/* Show scrollbar when hovered */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #CCC;
+}
+
+/* Show scrollbar when scrolling */
+::-webkit-scrollbar-thumb:active {
+  background-color: #999;
+}
+
+/* Customize scrollbar thumb and track styles */
+::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #F5F5F5;
+  border-radius: 3px;
+}
+
+</style>

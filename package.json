@@ -12,6 +12,7 @@
     "@sveltejs/vite-plugin-svelte": "1.0.0-next.49",
     "@tsconfig/svelte": "^3.0.0",
     "@types/jspdf": "^2.0.0",
+    "@types/pdfmake": "^0.2.2",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "svelte": "^3.58.0",
@@ -26,6 +27,7 @@
     "@tabler/icons-svelte": "^2.17.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",
+    "pdfmake": "^0.2.7",
     "svelte-multiselect": "^8.6.0"
   }
 }
