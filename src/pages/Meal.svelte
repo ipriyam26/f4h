@@ -1,11 +1,5 @@
 <script lang="ts">
-
-import {
-    selectedBreakfast,
-    selectedLunch,
-    selectedSnacks,
-    selectedDinner,
-  } from "../store/selectedFood";
+	import { onMount } from 'svelte';
   import Header from "../lib/Header.svelte";
   import FoodItemType from "../lib/FoodItemType.svelte";
   import type { Disease, FoodItem } from "../types";
@@ -13,14 +7,22 @@ import {
   import FoodData from "../assets/food_data.json";
   import CalorieCount from "../lib/CalorieCount.svelte";
   import Footer from "../lib/Footer.svelte";
-  import { IconDownload } from "@tabler/icons-svelte";
   import MealTime from "../lib/MealTime.svelte";
-  import { downloadDataAsPDF } from "../Download";
+  // import DownloadPdf from "src/lib/DownloadPdf.svelte";
+
   let currentlySelected: string = "Breakfast";
   let foodItems = FoodData as unknown as FoodItem[];
   function changeSelected(index: string) {
     currentlySelected = index;
   }
+  let DownloadPdf:any;
+  onMount(async () => {
+      try {
+        DownloadPdf = (await import('../lib/DownloadPdf.svelte')).default;
+      } catch (e) {
+        // DownloadPdf = 404;
+      }
+  })
 
   const mealTime = ["Breakfast", "Lunch", "Snacks", "Dinner"];
   function findValidCategories(isNonVeg: boolean) {
@@ -193,11 +195,6 @@ bg-[url('../assets/ellipse.svg')] pb-28 px-32"
     </ul>
   </div>
   <CalorieCount foodType={currentlySelected} />
-  <!-- <ul>
-    {#each filteredFood as fil}
-        <li>{fil.food_items}</li>
-    {/each}
-  </ul> -->
 </div>
 <div
   class=" bg-hero-pattern mt-10 rounded-2xl bg-primary bg-cover bg-center bg-no-repeat mx-32"
@@ -223,24 +220,8 @@ bg-[url('../assets/ellipse.svg')] pb-28 px-32"
       {/each}
 
   </ul>
+  <svelte:component this={DownloadPdf} />
 
-  <div class="mt-24">
-    <button
-    on:click={() => {
-      downloadDataAsPDF([
-        $selectedBreakfast,
-        $selectedLunch,
-        $selectedSnacks,
-        $selectedDinner,
-      ]);
-    }}
-    class="flex space-x-3 py-4 px-6 font-poppins  bg-white mx-auto rounded-xl">
-      <div class="bg-primary p-1.5 rounded-full">
-        <IconDownload color="white" stroke={3}/>
-      </div>
-      <p class="text-primary font-semibold text-2xl">Download as PDF</p>
-    </button>
-  </div>
   <div class="h-14"></div>
 </div>
 <Footer />
